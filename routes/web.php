@@ -14,5 +14,38 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return ('accueil');
+});
+
+route::get('/bonjour',function(){
+    return view('Hello',[
+        'name'=> 'Fiorella',
+        'numbers' =>[1, 3, 7],
+    ]);
+
+});
+
+route::get('/a-propos',function(){
+    return view('équipe de developpement',[
+        'name'=> 'A Propos',
+        'team'=>['Fiorella', 'Marina', 'Matthieu'],
+    ]);
+
+});
+Route::get('/a-propos/{user}',function($user){
+    return view('about-show',[
+        'user' => $user
+    ]);
+});
+
+Route::get('/au-revoir',function(){
+    return view('good-bye');
+});
+
+Route::get('/bonjour/{name}',function($equipe){
+    return view('Hello',[
+    'name' => $equipe,
+    'numbers'=>[],
+    ]); 
+    
 });
