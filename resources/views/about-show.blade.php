@@ -1,8 +1,5 @@
 @extends('layouts.base')
 
-
 @section('content')
-    <h1>
-        coucou
-    </h1>
+    <h1>{{ $user }}</h1>
 @endsection

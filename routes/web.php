@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\PolitesseController;
+use App\Models\Category;
+use App\Models\Movie;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,68 +16,86 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-route::get('/',function(){
+
+Route::get('/', function () {
     return view('accueil');
 });
 
-route::get('/bonjour',[politessecontroller::class, 'HelloEveryone']);
-route::get('/au-revoir',[politessecontroller::class, 'GoodBye']);
-route::get('/bonjour/{name}',[politessecontroller::class, 'HelloSomeone']);
+Route::get('/bonjour', [PolitesseController::class, 'helloEveryone']);
+Route::get('/au-revoir', [PolitesseController::class, 'goodBye']);
+Route::get('/bonjour/{name}', [PolitesseController::class, 'helloSomeone']);
 
-route::get('/a-propos',[AboutController::class,'index']);
-route::get('/a-propos/{user}',[AboutController::class,'show']);
+Route::get('/a-propos', [AboutController::class, 'index']);
+Route::get('/a-propos/{user}', [AboutController::class, 'show']);
 
-
-route::get('/exercice/catégories',function(){
-    return view('exercice.categories',[
-        'categories' => Category::all()
-    ]);
+// Affiche le formulaire
+Route::get('/categories/creer', function () {
+    return view('categories.create');
 });
 
+// Traite le formulaire
+Route::post('/categories/creer', function () {
+    // Vérifier les erreurs
+    request()->validate([
+        'name' => 'required|min:3|max:10',
+        // 'email' => 'required|email',
+    ]);
 
-route::get('/exercice/catégories/creer',function(){
-    //le modèle category correspond à la table categorie
-    $category = category::create([
-        'name'=> 'test'
+    // dump(request('name'));
+
+    // S'il n'y a pas d'erreurs, on crée la catégorie
+    Category::create([
+        'name' => request('name'),
     ]);
 
     return redirect('/exercice/categories');
 });
 
-
-Route::get('/', function () {
-    return ('accueil');
-});
-
-route::get('/bonjour',function(){
-    return view('Hello',[
-        'name'=> 'Fiorella',
-        'numbers' =>[1, 3, 7],
-    ]);
-
-});
-
-route::get('/a-propos',function(){
-    return view('équipe de developpement',[
-        'name'=> 'A Propos',
-        'team'=>['Fiorella', 'Marina', 'Matthieu'],
-    ]);
-
-});
-Route::get('/a-propos/{user}',function($user){
-    return view('about-show',[
-        'user' => $user
+Route::get('/exercice/categories', function () {
+    return view('exercice.categories', [
+        'categories' => Category::all()
     ]);
 });
 
-Route::get('/au-revoir',function(){
-    return view('good-bye');
+Route::get('/exercice/categories/creer', function () {
+    // Le modèle Category correspond à la table categories...
+    $category = Category::create([
+        'name' => 'Test'
+    ]);
+
+    return redirect('/exercice/categories');
 });
 
-Route::get('/bonjour/{name}',function($equipe){
-    return view('Hello',[
-    'name' => $equipe,
-    'numbers'=>[],
-    ]); 
-    
+Route::get('/exercice/categories/{id}', function ($id) {
+    dump($id);
+    $category = Category::find($id);
+
+    return $category->name;
+});
+
+Route::get('/exercice/films', function () {
+    return view('exercice.movies', [
+        'movies' => Movie::all()
+    ]);
+});
+
+Route::get('/exercice/films/creer', function () {
+    Movie::create([
+        'title' => 'Scarface',
+        'synopsys' => 'Rêve américain',
+        'duration' => '184',
+        'youtube' => '1234',
+        'cover' => 'scarface.jpg',
+        'released_at' => '1983-01-01',
+    ]);
+
+    return redirect('/exercice/films');
+});
+
+Route::get('/exercice/films/{id}', function ($id) {
+    $movie = Movie::find($id);
+
+    return view('exercice.movie', [
+        'movie' => $movie
+    ]);
 });
