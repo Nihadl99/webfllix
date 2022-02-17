@@ -23,6 +23,24 @@ route::get('/bonjour/{name}',[politessecontroller::class, 'HelloSomeone']);
 route::get('/a-propos',[AboutController::class,'index']);
 route::get('/a-propos/{user}',[AboutController::class,'show']);
 
+
+route::get('/exercice/catégories',function(){
+    return view('exercice.categories',[
+        'categories' => Category::all()
+    ]);
+});
+
+
+route::get('/exercice/catégories/creer',function(){
+    //le modèle category correspond à la table categorie
+    $category = category::create([
+        'name'=> 'test'
+    ]);
+
+    return redirect('/exercice/categories');
+});
+
+
 Route::get('/', function () {
     return ('accueil');
 });
