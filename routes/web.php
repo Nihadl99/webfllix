@@ -12,6 +12,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+route::get('/',function(){
+    return view('accueil');
+});
+
+route::get('/bonjour',[politessecontroller::class, 'HelloEveryone']);
+route::get('/au-revoir',[politessecontroller::class, 'GoodBye']);
+route::get('/bonjour/{name}',[politessecontroller::class, 'HelloSomeone']);
+
+route::get('/a-propos',[AboutController::class,'index']);
+route::get('/a-propos/{user}',[AboutController::class,'show']);
 
 Route::get('/', function () {
     return ('accueil');
