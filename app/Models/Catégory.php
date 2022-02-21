@@ -5,9 +5,9 @@
  use Illuminate\Database\Eloquent\Factories\HasFactory;
  use Illuminate\Database\Eloquent\Model;
 
- class Movie extends Model
+ class Category extends Model
  {
      use HasFactory;
 
-     protected $fillable = ['title', 'synopsys', 'duration', 'youtube', 'cover', 'released_at'];
+     protected $fillable = ['name'];
  }

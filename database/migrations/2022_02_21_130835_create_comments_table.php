@@ -13,15 +13,11 @@
       */
      public function up()
      {
-         Schema::create('movies', function (Blueprint $table) {
+         Schema::create('comments', function (Blueprint $table) {
              $table->id();
-             $table->string('title');
-             $table->text('synopsys');
-             $table->integer('duration');
-             $table->string('youtube')->nullable();
-             $table->string('cover');
-             $table->timestamp('released_at')->nullable();
-             $table->foreignId('category_id')->nullable();
+             $table->text('message');
+             $table->integer('note');
+             $table->foreignId('movie_id');
              $table->foreignId('user_id')->nullable();
              $table->timestamps();
          });
@@ -34,6 +30,6 @@
       */
      public function down()
      {
-         Schema::dropIfExists('movies');
+         Schema::dropIfExists('comments');
      }
  };
