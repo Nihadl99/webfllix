@@ -14,8 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('Categories.index',[
-            'categories'=>Category::all(),
+        return view('categories.index', [
+            'categories' => Category::latest()->paginate(8), //latest permet de trier les fichier du plus reccent au plus ancien 
         ]);
     }
 
@@ -26,7 +26,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('categories.create');
     }
 
     /**
@@ -37,7 +37,20 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Vérifier les erreurs
+        request()->validate([
+            'name' => 'required|min:3|max:20',
+            // 'email' => 'required|email',
+        ]);
+
+        // dump(request('name'));
+
+        // S'il n'y a pas d'erreurs, on crée la catégorie
+        $Category=Category::create([
+            'name' => request('name'),
+        ]);
+
+       // Return redirect('/categories')->with('status', 'la catégorie '.$category->name.' name.' a été créée.');
     }
 
     /**
@@ -48,7 +61,7 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -57,9 +70,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($category)
     {
-        //
+        return view('categorie.show', ['category'=>$category,]);
     }
 
     /**
