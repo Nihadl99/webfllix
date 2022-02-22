@@ -15,7 +15,7 @@ class CategoryController extends Controller
     public function index()
     {
         return view('categories.index', [
-            'categories' => Category::latest()->paginate(8), //latest permet de trier les fichier du plus reccent au plus ancien 
+            'categories' => Category::latest()->paginate(8),
         ]);
     }
 
@@ -46,11 +46,11 @@ class CategoryController extends Controller
         // dump(request('name'));
 
         // S'il n'y a pas d'erreurs, on crée la catégorie
-        $Category=Category::create([
+        $category = Category::create([
             'name' => request('name'),
         ]);
 
-       // Return redirect('/categories')->with('status', 'la catégorie '.$category->name.' name.' a été créée.');
+        return redirect('/categories')->with('status', 'La catégorie '.$category->name.' a été créée.');
     }
 
     /**
@@ -59,9 +59,11 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Category $category)
     {
-        
+        return view('categories.show', [
+            'category' => $category,
+        ]);
     }
 
     /**
@@ -70,9 +72,11 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($category)
+    public function edit(Category $category)
     {
-        return view('categorie.show', ['category'=>$category,]);
+        return view('categories.edit', [
+            'category' => $category,
+        ]);
     }
 
     /**
@@ -82,9 +86,19 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        // Vérifier les erreurs
+        request()->validate([
+            'name' => 'required|min:3',
+        ]);
+
+        // On modifie la catégorie dans la BDD
+        $category->update([
+            'name' => request('name'),
+        ]);
+
+        return redirect('/categories')->with('status', 'La catégorie '.$category->name.' a été modifiée.');
     }
 
     /**
@@ -93,8 +107,8 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(category $category)
     {
-        //
+        $category->delete();
     }
 }

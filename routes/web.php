@@ -30,13 +30,19 @@ Route::get('/a-propos', [AboutController::class, 'index']);
 Route::get('/a-propos/{user}', [AboutController::class, 'show']);
 
 
-
-Route::get('/categories',[CategoryController::class,'index']);
+Route::get('/categories', [CategoryController::class, 'index']);
 // Affiche le formulaire
-Route::get('/categories/creer', [CategoryController::class,'create']);
+Route::get('/categories/creer', [CategoryController::class, 'create']);
 // Traite le formulaire
-Route::post('/categories/creer',[CategoryController::class,'store']);
-Route::get('/categories/{category}',[CategoryController::class,'show']);
+Route::post('/categories/creer', [CategoryController::class, 'store']);
+
+Route::get('/categories/{category}', [CategoryController::class, 'show']);
+
+Route::get('/categories{category}/modifier', [CategoryController::class, 'edit']);
+Route::put('/categories/{category}', [CategoryController::class, 'update']);
+Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
+
+
 
 
 

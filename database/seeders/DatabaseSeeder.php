@@ -1,7 +1,10 @@
+
 <?php
 
 namespace Database\Seeders;
 
+use App\Models\Category;
+use App\Models\Movie;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -17,8 +20,6 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory(10)->create();
 
         Category::factory(30)->create();
-        movie::factory(30)->create();
-
-
+        Movie::factory(30)->create();
     }
 }
