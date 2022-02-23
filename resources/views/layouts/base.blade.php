@@ -29,6 +29,7 @@
                     <a class="nav-link active" aria-current="page" href="/">Accueil</a>
                     <a class="nav-link" href="/categories">Catégories</a>
                     <a class="nav-link" href="/a-propos">A propos</a>
+                    <a class="nav-link" href="/films">Films</a>
                 </div>
             </div>
         </div>
@@ -46,9 +47,13 @@
 
     <footer>
         <div class="container">
+            
             <p class="text-center">Copyright &copy; {{ date('Y') }} - Webflix</p>
         </div>
     </footer>
+
+
+    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>

@@ -1,13 +1,14 @@
 @extends('layouts.base')
 
 @section('content')
-    <a href="/exercice/films/creer">Ajouter un film</a>
+    <a href="/movies">Films</a>
 
     <div>
         @foreach ($movies as $movie)
             <div>
                 <h2>{{ $movie->title }}</h2>
-                <a href="/exercice/films/{{ $movie->id }}">Voir</a>
+                
+
             </div>
         @endforeach
     </div>
