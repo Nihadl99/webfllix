@@ -22,4 +22,13 @@
 
         return $hours.'h'.$minutes;
     }
+
+
+    public function category ()
+    {
+        return $this->belongsto(Category::class); //belongsto = appartient à : c'est a dire qu'un film appartient a une catégorie
+    }
+
+
 }
+?>

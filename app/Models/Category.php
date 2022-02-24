@@ -10,4 +10,12 @@
      use HasFactory;
 
      protected $fillable = ['name'];
+
+     //Todo : definir le hasmany on cherche a recuperer les film dans une catégorie
+     public function movies()
+     {
+         return $this->hasMany(Movie::class);
+     }
  }
+
+?>

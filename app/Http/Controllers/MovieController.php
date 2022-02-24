@@ -14,8 +14,8 @@
       */
      public function index()
      {
-         return view('Movies.index', [
-             'Movies' => Movie::latest('released_at')->paginate(10),
+         return view('movies.index', [
+             'movies' => Movie::latest('released_at')->paginate(10),
          ]);
      }
 
@@ -48,7 +48,7 @@
       */
      public function show(Movie $movie)
      {
-         return view('Movies.show', [
+         return view('movies.show', [
              'movie' => $movie,
          ]);
      }

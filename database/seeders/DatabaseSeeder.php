@@ -19,12 +19,15 @@ class DatabaseSeeder extends Seeder
     {
         \App\Models\User::factory(10)->create();
 
-        // On va faire un appel sur l'API de the movie DB
+        // On va faire un appel sur l'API de the movie DB : recupere les films 
         $response = Http::get('https://api.themoviedb.org/3/genre/movie/list?api_key=ebc0a4ad59da5f80113ec7d1142c72a7&language=fr');
         $genres = $response->json()['genres'];
 
         foreach ($genres as $genre){
-            Category::factory()->create(['name' => $genre['name']]);
+            Category::factory()->create([
+                //'id' => $genre['id'],
+                'name' => $genre['name'],
+            ]);
         }
         
 
@@ -39,9 +42,10 @@ class DatabaseSeeder extends Seeder
                 'synopsys' => $movie['overview'],
                 'released_at' => $movie['release_date'],
                 'cover' => 'https://image.tmdb.org/t/p/w500'.$movie['poster_path'],
+                'Category_id'=> $movie['genre_ids'][0]
             ]);
         }
-        
+    
 
     }
 }
