@@ -6,6 +6,7 @@ use App\Http\Controllers\MovieController;
 use App\Http\Controllers\PolitesseController;
 use App\Models\Category;
 use App\Models\Movie;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,38 +31,27 @@ Route::get('/bonjour/{name}', [PolitesseController::class, 'helloSomeone']);
 Route::get('/a-propos', [AboutController::class, 'index']);
 Route::get('/a-propos/{user}', [AboutController::class, 'show']);
 
-
 Route::get('/categories', [CategoryController::class, 'index']);
 // Affiche le formulaire
 Route::get('/categories/creer', [CategoryController::class, 'create']);
 // Traite le formulaire
 Route::post('/categories/creer', [CategoryController::class, 'store']);
-
 Route::get('/categories/{category}', [CategoryController::class, 'show']);
-
-Route::get('/categories{category}/modifier', [CategoryController::class, 'edit']);
+Route::get('/categories/{category}/modifier', [CategoryController::class, 'edit']);
 Route::put('/categories/{category}', [CategoryController::class, 'update']);
 Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
 
+// Route::get('/films', [MovieController::class, 'index']);
+// Route::get('/films/creer', [MovieController::class, 'create']);
+// Route::post('/films/creer', [MovieController::class, 'store']);
+// Route::get('/films/{movie}', [MovieController::class, 'show']);
 
-// On ajoute les routes movies pour les films pour nous permettre d'accédé aux films 
-//Route::get('/films', [MovieController::class, 'index']);
-//Route::get('/films/{movie}' , [MovieController::class,'show' ]);
 Route::controller(MovieController::class)->group(function () {
     Route::get('/films', 'index');
+    Route::get('/films/creer', 'create');
+    Route::post('/films/creer', 'store');
     Route::get('/films/{movie}', 'show');
 });
-
-Route::get('/acteurs', [ActorsController::class, 'index']);
-Route::get('/acteurs/{actor}', [ActorsController::class, 'show']);
-
-
-
-
-
-
-
-
 
 Route::get('/exercice/categories', function () {
     return view('exercice.categories', [
@@ -111,3 +101,7 @@ Route::get('/exercice/films/{id}', function ($id) {
         'movie' => $movie
     ]);
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

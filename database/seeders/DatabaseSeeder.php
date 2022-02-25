@@ -19,35 +19,36 @@ class DatabaseSeeder extends Seeder
     {
         \App\Models\User::factory(10)->create();
 
-        // On va faire un appel sur l'API de the movie DB : recupere les films 
+        // On va faire un appel sur l'API de The Movie DB
         $response = Http::get('https://api.themoviedb.org/3/genre/movie/list?api_key=ebc0a4ad59da5f80113ec7d1142c72a7&language=fr');
         $genres = $response->json()['genres'];
 
-        foreach ($genres as $genre){
+        foreach ($genres as $genre) {
             Category::factory()->create([
-                //'id' => $genre['id'],
+                'id' => $genre['id'],
                 'name' => $genre['name'],
             ]);
         }
-        
 
-        //Category::factory(30)->create();
+        // Category::factory(30)->create();
 
-        $response = http::get('https://api.themoviedb.org/3/movie/popular?api_key=ebc0a4ad59da5f80113ec7d1142c72a7&language=fr');
-        $movies = ($response->json()['results']);
+        $response = Http::get('https://api.themoviedb.org/3/movie/popular?api_key=ebc0a4ad59da5f80113ec7d1142c72a7&language=fr');
+        $movies = $response->json()['results'];
 
-        foreach($movies as $movie){
-            movie::factory()->create([
+        foreach ($movies as $movie) {
+            $movieSupp = Http::get('https://api.themoviedb.org/3/movie/'.$movie['id'].'?api_key=ebc0a4ad59da5f80113ec7d1142c72a7&language=fr-FR&append_to_response=credits,videos')->json();
+
+            Movie::factory()->create([
                 'title' => $movie['title'],
                 'synopsys' => $movie['overview'],
                 'released_at' => $movie['release_date'],
+                'youtube' => $movieSupp['videos']['results'][0]['key'] ?? null,
                 'cover' => 'https://image.tmdb.org/t/p/w500'.$movie['poster_path'],
-                'Category_id'=> $movie['genre_ids'][0]
+                'category_id' => $movie['genre_ids'][0],
+                // https://image.tmdb.org/t/p/w500/1234.jpg
             ]);
         }
-    
 
+        Movie::factory(30)->create();
     }
 }
-
-?>

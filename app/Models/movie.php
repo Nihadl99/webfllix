@@ -1,15 +1,15 @@
 <?php
 
- namespace App\Models;
+namespace App\Models;
 
- use Illuminate\Database\Eloquent\Factories\HasFactory;
- use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
- class Movie extends Model
- {
+class Movie extends Model
+{
     use HasFactory;
 
-    protected $fillable = ['title', 'synopsys', 'duration', 'youtube', 'cover', 'released_at'];
+    protected $fillable = ['title', 'synopsys', 'duration', 'youtube', 'cover', 'released_at', 'category_id'];
 
     protected $casts = [
         'released_at' => 'datetime:Y-m-d',
@@ -23,12 +23,8 @@
         return $hours.'h'.$minutes;
     }
 
-
-    public function category ()
+    public function category()
     {
-        return $this->belongsto(Category::class); //belongsto = appartient à : c'est a dire qu'un film appartient a une catégorie
+        return $this->belongsTo(Category::class);
     }
-
-
 }
-?>
